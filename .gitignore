@@ -1,0 +1,4 @@
+*.tgz
+source/module
+*.swp
+*.o
