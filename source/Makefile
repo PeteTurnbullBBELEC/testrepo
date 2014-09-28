@@ -2,7 +2,7 @@ CC = arm-linux-gcc
 CFLAGS = -O2 -Wall -W -Wmissing-declarations -Wshadow
 CPPFLAGS = -I./MQTTClient -I../include
 LDFLAGS = -s -L./MQTTClient -L../lib
-LDLIBS = -lcommon -ldl -lssl -lcrypto -lpthread -lprotobuf-c
+LDLIBS = -lpthread -lprotobuf-c -lcommon -ldl -lssl -lcrypto
 
 MODULE_EXE = module
 MODULE_OBJ = module.o edcpayload.pb-c.o
@@ -18,3 +18,5 @@ clean:
 	rm -f MQTTClient/*.o
 
 install:
+	install -d $(DESTDIR)/bin/
+	install -m 755 $(MODULE_EXE) $(DESTDIR)/bin/ET_MRouterd
