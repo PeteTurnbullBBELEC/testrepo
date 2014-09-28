@@ -1,0 +1,35 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+	echo -n "Starting module EuroTech Message Router: "
+	. /opt/EuroTech_Message_Router/etc/getdeviceidip
+	. /opt/EuroTech_Message_Router/etc/settings
+	/opt/EuroTech_Message_Router/bin/ET_MRouterd &
+	echo "Done"
+	exit 0
+	;;
+  stop)
+	echo -n "Stopping module EuroTech_Message Router: "
+	killall ET_MRouterd 2> /dev/null
+	echo "Done"
+	exit 0
+	;;
+  restart)
+	$0 stop
+	$0 start
+	;;
+  status)
+	echo -n "Module EuroTech Message Router is "
+	killall -0 ET_MRouterd 2> /dev/null
+	RETVAL=$?
+	if [ $RETVAL = 0 ]; then echo "running"; else echo "stopped"; fi
+	exit $RETVAL
+	;;
+  defaults)
+    cp /opt/EuroTech_Message_Router/etc/defaults /opt/EuroTech_Message_Router/etc/settings 2> /dev/null
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart|status|defaults}"
+	exit 1
+esac
